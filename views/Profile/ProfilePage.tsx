@@ -1,10 +1,9 @@
-import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 const ProfilePage = () => {
-  return (
-    <View>ProfilePage</View>
-  )
+    return (
+        <View><Text>ProfilePage</Text></View>
+    )
 }
 
 export default ProfilePage
