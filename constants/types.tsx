@@ -1,6 +1,6 @@
 export type Task =
-{
-    title: string,
-    description: string
-    isDone: boolean,
-}
+    {
+        title: string,
+        isDone: boolean,
+        id: string,
+    }

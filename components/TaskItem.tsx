@@ -1,12 +1,30 @@
 import { Text, View, StyleSheet } from "react-native"
-import { Card, Button } from "react-native-paper";
-import { Task } from "../constants/types"
-
-const TaskItem = (props: Task) => {
-    const { title, description, isDone } = props
+import { Card, Button, IconButton } from "react-native-paper";
+export type TaskItemProps =
+    {
+        title: string,
+        isDone: boolean,
+        id: string,
+        removeItem: (id:string) => void
+    }
+const TaskItem = (props: TaskItemProps) => {
+    const { title, isDone, id, removeItem } = props
     return (
         <Card style={styles.item}>
-            <Card.Title title={title} subtitle={description}/>
+            <Card.Content>
+                <View style={styles.itemContent}>
+                    <View style={{ flex: 1 }}>
+                        <Text>{title}</Text>
+                    </View>
+                    <View style={styles.rightItem}>
+                        <IconButton
+                            icon="delete"
+                            iconColor="red"
+                            onPress={() => removeItem(id)}
+                        />
+                    </View>
+                </View>
+            </Card.Content>
         </Card>
     )
 }
@@ -18,29 +36,17 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginHorizontal: 10,
     },
-    itemLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexWrap: 'wrap'
+    itemContent: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+
     },
-    square: {
-        width: 24,
-        height: 24,
-        backgroundColor: '#55BCF6',
-        opacity: 0.4,
-        borderRadius: 5,
-        marginRight: 15,
+    rightItem: {
+        justifyContent: "center",
     },
-    itemText: {
-        maxWidth: '80%',
-    },
-    circular: {
-        width: 12,
-        height: 12,
-        borderColor: '#55BCF6',
-        borderWidth: 2,
-        borderRadius: 5,
-    },
+
 });
 
 export default TaskItem
