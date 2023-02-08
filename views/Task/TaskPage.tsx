@@ -4,6 +4,7 @@ import { Button, FAB, List, TextInput, Title, TouchableRipple } from 'react-nati
 import TaskItem from '../../components/TaskItem';
 import NoItems from '../../constants/NoItems';
 import { Task } from '../../constants/types';
+import { auth } from '../../firebase';
 
 const TaskPage = ({ navigation }) => {
     const [tasks, setTasks] = useState<Task[] | []>([])
@@ -18,7 +19,7 @@ const TaskPage = ({ navigation }) => {
             setErrorMessage("")
             setTasks((currentTasks) => [
                 { title: taskTitle, isDone: false, id: Math.random().toString(16).slice(2) }, ...currentTasks
-            ]); // find a way to fix the type safety 
+            ]); 
             setModalVisible(false);
             setTaskTitle("");
         }
@@ -59,6 +60,7 @@ const TaskPage = ({ navigation }) => {
             </Modal>
             <View style={{ padding: 10 }}>
                 <Title style={styles.sectionTitle}>Today's Tasks</Title>
+                <Text style={{ paddingHorizontal: 20 }}>{auth.currentUser?.email}</Text>
             </View>
             <View style={styles.items}>
                 <FlatList
