@@ -3,12 +3,11 @@ import { Card, Button, IconButton } from "react-native-paper";
 export type TaskItemProps =
     {
         title: string,
-        isDone: boolean,
         id: string,
-        removeItem: (id:string) => void
+        removeItem: (id: string) => Promise<void>
     }
 const TaskItem = (props: TaskItemProps) => {
-    const { title, isDone, id, removeItem } = props
+    const { title, id, removeItem } = props
     return (
         <Card style={styles.item}>
             <Card.Content>

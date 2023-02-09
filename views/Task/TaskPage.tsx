@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { async } from '@firebase/util';
+import { addDoc, collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView, ScrollView, Modal, Pressable, Alert, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Button, FAB, List, TextInput, Title, TouchableRipple } from 'react-native-paper';
 import TaskItem from '../../components/TaskItem';
 import NoItems from '../../constants/NoItems';
 import { Task } from '../../constants/types';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 
 const TaskPage = ({ navigation }) => {
     const [tasks, setTasks] = useState<Task[] | []>([])
@@ -13,27 +15,58 @@ const TaskPage = ({ navigation }) => {
     const [addErrorVisible, setAddErrorVisible] = useState<"none" | "flex">("none");
     const [errorMessage, setErrorMessage] = useState<string>();
 
-    const handleAddTask = (): void => {
+    useEffect(() => {
+        getTasks()
+    }, [])
+
+    const getTasks = async (): Promise<void> => {
+        const colRef = collection(db, "tasks")
+        const q = query(colRef, where("userId", "==", auth.currentUser.uid));
+        const querySnapshot = await getDocs(q);
+        let data = [];
+        querySnapshot.forEach((doc) => {
+            data.push({ title: doc.data().name, id: doc.id })
+        });
+        setTasks(data);
+    }
+
+    const handleAddTask = async (): Promise<void> => {
         if (taskTitle.trim() !== "") {
             setAddErrorVisible("none");
-            setErrorMessage("")
-            setTasks((currentTasks) => [
-                { title: taskTitle, isDone: false, id: Math.random().toString(16).slice(2) }, ...currentTasks
-            ]); 
-            setModalVisible(false);
-            setTaskTitle("");
+            await addDoc(collection(db, "tasks"), {
+                name: "test",
+                userId: auth.currentUser.uid
+            }).then(res => {
+                setTasks((currentTasks) => [
+                    { title: taskTitle, isDone: false, id: res.id }, ...currentTasks
+                ]);
+                setErrorMessage("");
+                setAddErrorVisible("none")
+                setTaskTitle("");
+                setModalVisible(false);
+            }).catch((err) => {
+                setErrorMessage(err.message)
+                setAddErrorVisible("flex")
+            })
         }
-        setAddErrorVisible("flex")
-        setErrorMessage("Can't add empty task")
+        else {
+
+            setErrorMessage("Can't add empty task")
+            setAddErrorVisible("flex")
+        }
     }
 
     const closeModal = (): void => {
         setModalVisible(false);
+        setErrorMessage("");
+        setAddErrorVisible("none");
+        setTaskTitle("");
     }
 
-    const removeItem = (id: string): void => {
+    const removeItem = async (id: string): Promise<void> => {
         // @ts-ignore
         const filteredData = tasks.filter(item => item.id !== id);
+        await deleteDoc(doc(db, "tasks", id))
         setTasks(filteredData)
     }
     return (
@@ -59,7 +92,7 @@ const TaskPage = ({ navigation }) => {
 
             </Modal>
             <View style={{ padding: 10 }}>
-                <Title style={styles.sectionTitle}>Today's Tasks</Title>
+                <Title style={styles.sectionTitle}>My tasks</Title>
                 <Text style={{ paddingHorizontal: 20 }}>{auth.currentUser?.email}</Text>
             </View>
             <View style={styles.items}>
@@ -68,7 +101,7 @@ const TaskPage = ({ navigation }) => {
                     ListEmptyComponent={<NoItems />}
                     data={tasks}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <TaskItem removeItem={removeItem} id={item.id} title={item.title} isDone={item.isDone} />
+                    renderItem={({ item }) => <TaskItem removeItem={removeItem} id={item.id} title={item.title} />
                     }
                 />
             </View>

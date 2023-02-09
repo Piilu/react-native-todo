@@ -13,10 +13,6 @@ const RegisterPage = ({ navigation }) => {
     const handleRegister = async () => {
         if (password === passwordConfirm) {
             await createUserWithEmailAndPassword(auth, email, password)
-                .then(cred => {
-                    console.log(cred.user.email)
-                    navigation.replace("LoginPage")
-                })
                 .catch(error => {
                     setErrorMessage(error.message)
                 })

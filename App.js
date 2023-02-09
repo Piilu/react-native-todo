@@ -34,8 +34,12 @@ function App({ navigation }) {
                 <Button onPress={() => { handleLogOut() }}>Log out</Button>
               )
             }} name="TaskPage" component={TaskPage} />
-            ) : (<Stack.Screen options={{ headerTitle: "Login", }} name="LoginPage" component={LoginPage} />)}
-        <Stack.Screen options={{ headerTitle: "Register", }} name="RegisterPage" component={RegisterPage} />
+            ) :
+            <>
+            <Stack.Screen options={{ headerTitle: "Login", }} name="LoginPage" component={LoginPage} /> 
+            <Stack.Screen options={{ headerTitle: "Register", }} name="RegisterPage" component={RegisterPage} />
+            </>
+            }
       </Stack.Navigator>
     </NavigationContainer>
   );
