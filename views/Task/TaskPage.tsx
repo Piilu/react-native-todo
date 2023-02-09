@@ -34,7 +34,7 @@ const TaskPage = ({ navigation }) => {
         if (taskTitle.trim() !== "") {
             setAddErrorVisible("none");
             await addDoc(collection(db, "tasks"), {
-                name: "test",
+                name: taskTitle,
                 userId: auth.currentUser.uid
             }).then(res => {
                 setTasks((currentTasks) => [
