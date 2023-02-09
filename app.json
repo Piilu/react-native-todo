@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Todo",
-    "slug": "Todo",
+    "slug": "Todo2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,6 +23,7 @@
     "android": {
       "package": "com.test.todo",
       "versionCode": 1,
+      "buildType":"apk",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -30,6 +31,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e5af445f-1934-41a3-91cc-b9267bade489"
+      }
     }
   }
 }
