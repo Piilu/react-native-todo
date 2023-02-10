@@ -23,7 +23,7 @@
     "android": {
       "package": "com.test.todo",
       "versionCode": 1,
-      "buildType":"apk",
+      "buildType": "apk",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

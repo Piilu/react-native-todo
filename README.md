@@ -3,4 +3,4 @@
 - Firebase
 
 Pole androidis testinud. Loodetavasti töötab :)
-<a htef="https://expo.dev/artifacts/eas/fYYeEmbxkUd2AF2zThchWu.aab">Android file</a>
+<a href="./build-android.apk">Android file</a>
