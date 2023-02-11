@@ -23,7 +23,7 @@ const RegisterPage = ({ navigation }) => {
     }
 
     return (
-        <KeyboardAvoidingView style={styles.centeredView} behavior="padding" >
+        <View style={styles.centeredView} >
             <View style={{marginHorizontal:25}}>
                 <Text style={{ color: "red", marginBottom: 10 }}>{errorMessage}</Text>
             </View>
@@ -33,7 +33,7 @@ const RegisterPage = ({ navigation }) => {
                 <TextInput style={{ width: 300, marginBottom: 20 }} secureTextEntry={true} onChangeText={(text) => { setPasswordConfirm(text) }} value={passwordConfirm} label="Confirm password"></TextInput>
                 <Button style={{ width: 300, marginBottom: 20 }} mode="contained" onPress={() => { handleRegister() }}>Register</Button>
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 

@@ -25,7 +25,7 @@ const LoginPage = ({ navigation }) => {
     }
 
     return (
-        <KeyboardAvoidingView style={styles.centeredView} behavior="padding" >
+        <View style={styles.centeredView} >
             <View style={{ marginHorizontal: 25 }}>
                 <Text style={{ color: "red", marginBottom: 10 }}>{errorMessage}</Text>
             </View>
@@ -35,7 +35,7 @@ const LoginPage = ({ navigation }) => {
                 <Button style={{ width: 300, marginBottom: 20 }} mode="contained" onPress={() => { handleLogin() }}>Login</Button>
                 <Button style={{ width: 300, marginBottom: 20 }} mode="outlined" onPress={() => { handleNavigateRegister() }}>Register</Button>
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 
